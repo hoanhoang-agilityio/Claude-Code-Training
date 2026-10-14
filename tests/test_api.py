@@ -31,3 +31,15 @@ def test_weekly_summary_for_active_week():
 def test_week_start_must_be_monday():
     res = client.get("/users/anna/summary/weekly", params={"week_start": "2026-10-07"})
     assert res.status_code == 422
+
+
+def test_weekly_summary_for_empty_week_returns_zeros():
+    """KAN-7: binh skipped the week of 2026-10-05 and gets a 500 instead of an empty summary."""
+    res = client.get("/users/binh/summary/weekly", params={"week_start": "2026-10-05"})
+    assert res.status_code == 200
+    body = res.json()
+    assert body["sessions"] == 0
+    assert body["total_volume_kg"] == 0
+    assert body["total_minutes"] == 0
+    assert body["avg_minutes_per_session"] == 0
+    assert body["exercises"] == []

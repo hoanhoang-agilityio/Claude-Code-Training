@@ -12,9 +12,10 @@ def weekly_summary(store: WorkoutStore, user_id: str, week_start: date) -> dict:
     week_end = week_start + timedelta(days=6)  # Sunday
     workouts = store.between(user_id, week_start, week_end)
 
-    total_volume = sum(w.volume_kg for w in workouts)
+    total_volume = sum((w.volume_kg for w in workouts), 0.0)
     total_minutes = sum(w.duration_min for w in workouts)
-    avg_minutes = round(total_minutes / len(workouts), 1)
+    # A skipped week is normal: report zeros, not a 500 (KAN-7).
+    avg_minutes = round(total_minutes / len(workouts), 1) if workouts else 0.0
 
     return {
         "user_id": user_id,
