@@ -11,7 +11,7 @@ from app.seed import load_seed
 from app.store import store
 from app.summary import weekly_summary
 
-app = FastAPI(title="GymLog API", version="0.1.0")
+app = FastAPI(title="GymLog API (training)", version="0.1.0")
 load_seed(store)
 
 

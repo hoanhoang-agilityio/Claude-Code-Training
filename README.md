@@ -20,6 +20,8 @@ Open http://127.0.0.1:8000/docs for the interactive API.
 pytest -q
 ```
 
+If `pytest` can't import `app`, run it as `python -m pytest -q` from the repo root.
+
 ## API
 
 | Method | Path | What it does |
