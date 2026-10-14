@@ -14,7 +14,8 @@ def weekly_summary(store: WorkoutStore, user_id: str, week_start: date) -> dict:
 
     total_volume = sum(w.volume_kg for w in workouts)
     total_minutes = sum(w.duration_min for w in workouts)
-    avg_minutes = round(total_minutes / len(workouts), 1)
+    # An empty week (no sessions) is valid: report 0 instead of dividing by zero (KAN-7).
+    avg_minutes = round(total_minutes / len(workouts), 1) if workouts else 0
 
     return {
         "user_id": user_id,
