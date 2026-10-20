@@ -32,3 +32,18 @@ If `pytest` can't import `app`, run it as `python -m pytest -q` from the repo ro
 | GET | `/users/{user_id}/summary/weekly?week_start=YYYY-MM-DD` | Monday–Sunday summary for one week |
 
 Data is in memory and seeded from `app/seed.py` (users `anna` and `binh`); it resets on restart.
+
+## Claude Code setup
+
+| Path | What it is | Dojo day |
+| ---- | ---------- | -------- |
+| `CLAUDE.md` | Commands, conventions and the "never do" list, loaded every session | D05 |
+| `.claude/settings.json` | Team permissions and the forbidden-command hook | D04, D09 |
+| `.claude/hooks/block_forbidden.py` | Blocks push to `main`, force-push, and commit trailer lines | D09 |
+| `.claude/agents/bug-investigator.md` | Read-only subagent for bounded bug questions | D06 |
+| `.claude/skills/review-checklist/` | Team review order as a skill | D07, D10 |
+| `.claude/commands/standup.md` | Personal `/standup` command | D07 |
+| `.mcp.json` | Playwright MCP for driving the running app (needs Node.js) | D08 |
+| `docs/review-false-positives.md` | Review findings that were not real | D10 |
+
+Personal overrides go in `.claude/settings.local.json` (git-ignored).
