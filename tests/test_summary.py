@@ -27,3 +27,17 @@ def test_average_is_float_for_a_normal_week():
     assert summary["sessions"] == 2
     assert summary["avg_minutes_per_session"] == 37.5
     assert summary["total_volume_kg"] == 2400.0
+
+
+def test_sunday_workout_is_counted():
+    """KAN-2: the week runs Monday to Sunday, so a Sunday workout belongs to it."""
+    store = WorkoutStore()
+    store.add("anna", date(2026, 10, 5), "squat", 5, 5, 80.0, 45)
+    store.add("anna", date(2026, 10, 11), "squat", 5, 5, 82.5, 45)  # Sunday
+    store.add("anna", date(2026, 10, 12), "bench", 5, 5, 60.0, 40)  # next Monday
+
+    summary = weekly_summary(store, "anna", date(2026, 10, 5))
+
+    assert summary["week_end"] == "2026-10-11"
+    assert summary["sessions"] == 2
+    assert summary["total_minutes"] == 90
