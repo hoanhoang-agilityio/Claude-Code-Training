@@ -10,7 +10,8 @@ from app.store import WorkoutStore
 def weekly_summary(store: WorkoutStore, user_id: str, week_start: date) -> dict:
     """Summarise one training week (Monday to Sunday) for a user."""
     week_end = week_start + timedelta(days=6)  # Sunday
-    workouts = store.between(user_id, week_start, week_end)
+    # between() is end-exclusive, so pass the next Monday to include Sunday (KAN-2).
+    workouts = store.between(user_id, week_start, week_end + timedelta(days=1))
 
     total_volume = sum((w.volume_kg for w in workouts), 0.0)
     total_minutes = sum(w.duration_min for w in workouts)
